@@ -5,19 +5,22 @@ import time
 import base64
 import socket
 
-from webob.exc import HTTPFound
 from cromlech.browser import redirect_exception_response
 from cromlech.browser.exceptions import HTTPRedirect
-from dolmen.message import send
 from dolmen.forms.base.markers import HIDDEN
+from dolmen.message import send
+from gk.backends import IPortal
+from gk.crypto import ticket as tlib
 from urllib import quote
 from uvclight import FAILURE, SuccessMarker
 from uvclight import Form, Actions, Action, Fields
 from uvclight import baseclass, context
+from webob.exc import HTTPFound
 from zope.component import getUtilitiesFor
+from zope.i18nmessageid import MessageFactory
 
-from . import i18n as _, ticket as tlib
-from .portals import IPortal
+
+_ = MessageFactory("gatekeeper")
 
 
 class LogMe(Action):

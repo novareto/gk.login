@@ -4,8 +4,7 @@ from cromlech.sqlalchemy import create_engine, SQLAlchemySession
 from uvclight import IRootObject
 from zope.interface import implementer
 from zope.location import Location
-
-from .admin import get_valid_messages, Admin, styles
+from gk.admin import get_valid_messages, Admin, styles
 
 
 @implementer(IRootObject)

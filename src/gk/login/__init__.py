@@ -6,15 +6,13 @@ from cromlech.browser import PublicationBeginsEvent, PublicationEndsEvent
 from uvclight import setSession, query_view
 from zope.event import notify
 
-from . import SESSION_KEY
 
-
-def login(global_conf, pkey, dest, dburl, dbkey, **kwargs):
+def login(global_conf, pkey, dest, dburl, dbkey, sessionkey, **kwargs):
     root = LoginRoot(pkey, dest, dburl, dbkey)
 
     def app(environ, start_response):
         setLanguage('de')
-        session = environ[SESSION_KEY].session
+        session = environ[sessionkey].session
         setSession(session)
         request = Request(environ)
         notify(PublicationBeginsEvent(root, request))
