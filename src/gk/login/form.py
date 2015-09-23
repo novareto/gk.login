@@ -18,6 +18,8 @@ from uvclight import baseclass, context
 from webob.exc import HTTPFound
 from zope.component import getUtilitiesFor
 from zope.i18nmessageid import MessageFactory
+from .models import LoginRoot
+from .interfaces import ILoginForm, DirectResponse
 
 
 _ = MessageFactory("gatekeeper")
@@ -28,10 +30,11 @@ class LogMe(Action):
     def available(self, form):
         return True
 
+
     def cook(self, form, login, password, authenticated_for, back):
         privkey = tlib.read_key(form.context.pkey)
         val = base64.b64encode(
-            lib.bauth(
+            tlib.bauth(
                 form.request.environment['aes_cipher'],
                 '%s:%s' % (login, password))
         )

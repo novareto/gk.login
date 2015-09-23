@@ -5,14 +5,15 @@ from cromlech.i18n.utils import setLanguage
 from cromlech.browser import PublicationBeginsEvent, PublicationEndsEvent
 from uvclight import setSession, query_view
 from zope.event import notify
+from .models import LoginRoot
 
 
-def login(global_conf, pkey, dest, dburl, dbkey, sessionkey, **kwargs):
+def login(global_conf, pkey, dest, dburl, dbkey, session_key, **kwargs):
     root = LoginRoot(pkey, dest, dburl, dbkey)
 
     def app(environ, start_response):
         setLanguage('de')
-        session = environ[sessionkey].session
+        session = environ[session_key].session
         setSession(session)
         request = Request(environ)
         notify(PublicationBeginsEvent(root, request))
