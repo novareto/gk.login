@@ -30,5 +30,6 @@ setup(name='gk.login',
       zip_safe=False,
       extras_require={'test': test_requires},
       install_requires=[
+          'setuptools',
           ],
       )

@@ -9,7 +9,7 @@ from cromlech.browser import redirect_exception_response
 from cromlech.browser.exceptions import HTTPRedirect
 from dolmen.forms.base.markers import HIDDEN
 from dolmen.message import send
-from gk.backends import IPortal
+#from gk.backends import IPortal
 from gk.crypto import ticket as tlib
 from urllib import quote
 from uvclight import FAILURE, SuccessMarker
@@ -35,7 +35,7 @@ class LogMe(Action):
         privkey = tlib.read_key(form.context.pkey)
         val = base64.b64encode(
             tlib.bauth(
-                form.request.environment['aes_cipher'],
+                form.context.cipher,
                 '%s:%s' % (login, password))
         )
         #val = val.replace('\n', '', 1)
@@ -45,8 +45,7 @@ class LogMe(Action):
             privkey, login, validuntil, tokens=list(authenticated_for),
             extra_fields=(('bauth', val),))
 
-        back = form.request.form.get('form.field.back', back)
-        back = form.request.form.get('back', back)
+        back = form.back(login)
         res = HTTPFound(location=back)
         res.set_cookie('auth_pubtkt', quote(ticket), path='/',
                        domain='novareto.de', secure=False)
@@ -88,6 +87,9 @@ class BaseLoginForm(Form):
     fields['back'].prefix = ""
     actions = Actions(LogMe(_(u'Authenticate'), default=_(u"Authenticate")))
     ignoreRequest = False
+
+    def back(self, login):
+        return self.context.dest
 
     def available(self):
         marker = True

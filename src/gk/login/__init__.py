@@ -6,7 +6,7 @@ from cromlech.browser import PublicationBeginsEvent, PublicationEndsEvent
 from uvclight import eval_loader, setSession, query_view
 from zope.interface import alsoProvides
 from zope.event import notify
-from .models import LoginRoot
+#from .models import LoginRoot
 
 
 def login(global_conf, pkey, dest, dburl, dbkey, layer, session_key, **kwargs):
