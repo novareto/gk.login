@@ -9,7 +9,7 @@ test_requires = [
     ]
 
 setup(name='gk.login',
-      version='0.1',
+      version='0.2',
       description="Login system for Gatekeeper",
       long_description = long_description,
       classifiers=['Environment :: Web Environment',
